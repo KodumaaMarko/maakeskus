@@ -30,7 +30,7 @@ import {
 
 const PHONE_DISPLAY = '+372 5633 0897';
 const PHONE_TEL = '+37256330897';
-const EMAIL = 'info@maakeskus.ee';
+const EMAIL = 'info@eestimaakeskus.ee';
 const WHATSAPP_TEXT = 'Tere! Soovin saada pakkumist oma kinnistule.';
 const WHATSAPP_URL = `https://wa.me/37256330897?text=${encodeURIComponent(WHATSAPP_TEXT)}`;
 
@@ -922,7 +922,7 @@ const Footer = () => (
 
       <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row">
         <p>© {new Date().getFullYear()} Eesti Maakeskus · L.T Estate OÜ</p>
-        <p>maakeskus.ee</p>
+        <p>eestimaakeskus.ee</p>
       </div>
     </div>
   </footer>
