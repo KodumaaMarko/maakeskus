@@ -413,6 +413,11 @@ const InquiryForm = () => {
       });
       if (!res.ok) throw new Error(`Status ${res.status}`);
       setSubmitted(true);
+      // Lead conversion signal. Fire to both layers so it works whether GA4 (gtag, now)
+      // or GTM (later) is the consumer. GTM's future Meta Pixel "Lead" trigger listens
+      // for the `lead_submit` dataLayer event.
+      window.dataLayer?.push({ event: 'lead_submit', form_id: 'maa-paring', land_type: form.landType });
+      window.gtag?.('event', 'generate_lead', { form_id: 'maa-paring', land_type: form.landType });
     } catch (err) {
       console.error(err);
       setError('Saatmisel tekkis viga. Palun proovi uuesti või kirjuta meile WhatsAppis.');

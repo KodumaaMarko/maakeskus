@@ -3,6 +3,78 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ============================================================
+         ANALYTICS & TRACKING
+         Order matters: Consent Mode default (denied) must run BEFORE
+         any tracker (gtag / GTM / Pixel) loads.
+         ============================================================ -->
+
+    <!-- 1) Google Consent Mode v2 — default everything DENIED.
+         GA4 runs in cookieless/modeling mode until consent is granted.
+         The future cookie-consent banner must call, on "accept":
+           gtag('consent', 'update', {
+             ad_storage: 'granted', ad_user_data: 'granted',
+             ad_personalization: 'granted', analytics_storage: 'granted'
+           });
+    -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        functionality_storage: 'denied',
+        personalization_storage: 'denied',
+        security_storage: 'granted',
+        wait_for_update: 500
+      });
+      gtag('set', 'url_passthrough', true);
+      gtag('set', 'ads_data_redaction', true);
+    </script>
+
+    <!-- 2) GA4 via gtag.js (reuses the gtag() defined above — do NOT redefine dataLayer) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-38Z5Y7YG8Z"></script>
+    <script>
+      gtag('js', new Date());
+      gtag('config', 'G-38Z5Y7YG8Z');
+    </script>
+
+    <!-- 3) PLACEHOLDER — Google Tag Manager (paste GTM-XXXXXXX when the container exists).
+         When you activate GTM, add the Meta Pixel as a GTM tag firing on the
+         `lead_submit` dataLayer event. Do NOT add a second GA4 tag inside GTM —
+         gtag above already covers GA4 (would double-count). Also paste the matching
+         <noscript> iframe just after <body> (see placeholder in <body> below).
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+    -->
+
+    <!-- 4) PLACEHOLDER — Meta (Facebook) Pixel (paste your PIXEL_ID, ~15 digits).
+         Consent-aware: starts revoked, the consent banner should call fbq('consent','grant')
+         on accept. Verify firing with the Meta Pixel Helper Chrome extension.
+    <script>
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+      document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('consent', 'revoke');
+      fbq('init', 'PIXEL_ID');
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+    -->
+
+    <!-- 5) PLACEHOLDER — Google Search Console verification (paste content when verifying eestimaakeskus.ee)
+    <meta name="google-site-verification" content="PASTE_VERIFICATION_TOKEN" />
+    -->
+
     <meta name="description" content="Ostame põllumaad, metsamaad, elamumaad, ärimaad ja probleemseid kinnistuid üle Eesti. Küsi tasuta pakkumist ning võtame ühendust kuni 24 tunni jooksul." />
     <meta name="keywords" content="ostame maad, maa kokkuost, põllumaa müük, metsamaa müük, elamumaa müük, ärimaa müük, tootmismaa müük, probleemsed kinnistud, kinnistu müük, Eesti Maakeskus" />
     <meta name="author" content="Eesti Maakeskus" />
@@ -57,6 +129,11 @@
     </script>
   </head>
   <body>
+    <!-- PLACEHOLDER — Google Tag Manager (noscript). Paste GTM-XXXXXXX to match the head snippet.
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    -->
+
     <!-- Netlify static form definition (must mirror the React form field names) -->
     <form name="maa-paring" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input type="hidden" name="form-name" value="maa-paring" />
