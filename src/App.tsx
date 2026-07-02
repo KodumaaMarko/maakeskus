@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import {
@@ -383,6 +383,8 @@ const InquiryForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Ensures the Meta Pixel Lead event fires at most once per successful submission.
+  const leadTracked = useRef(false);
 
   const canSubmit =
     form.landType && form.name.trim() && form.phone.trim() && form.email.trim() && !submitting;
@@ -418,6 +420,12 @@ const InquiryForm = () => {
       // for the `lead_submit` dataLayer event.
       window.dataLayer?.push({ event: 'lead_submit', form_id: 'maa-paring', land_type: form.landType });
       window.gtag?.('event', 'generate_lead', { form_id: 'maa-paring', land_type: form.landType });
+      // Meta Pixel Lead conversion. Base pixel is loaded globally in index.html; only track here.
+      // Guarded so it never throws (unloaded pixel / SSR) and fires once per successful submit.
+      if (!leadTracked.current && typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead');
+        leadTracked.current = true;
+      }
     } catch (err) {
       console.error(err);
       setError('Saatmisel tekkis viga. Palun proovi uuesti või kirjuta meile WhatsAppis.');
