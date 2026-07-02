@@ -72,9 +72,8 @@
       fbq('init', '2475051009627720');
       fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=2475051009627720&ev=PageView&noscript=1"
-      /></noscript>
+    <!-- Meta Pixel <noscript> fallback lives just after <body> (an <img> is not
+         valid inside <noscript> in <head>). -->
     <!-- End Meta Pixel Code -->
 
     <!-- 5) PLACEHOLDER — Google Search Console verification (paste content when verifying eestimaakeskus.ee)
@@ -135,6 +134,10 @@
     </script>
   </head>
   <body>
+    <!-- Meta Pixel <noscript> fallback (must live in <body>, not <head>) -->
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=2475051009627720&ev=PageView&noscript=1"/></noscript>
+
     <!-- PLACEHOLDER — Google Tag Manager (noscript). Paste GTM-XXXXXXX to match the head snippet.
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
