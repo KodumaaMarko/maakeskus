@@ -55,8 +55,7 @@
     -->
 
     <!-- 4) Meta (Facebook) Pixel — Eesti Maakeskus (ID 2475051009627720).
-         Consent-aware: starts revoked so nothing fires until the cookie-consent
-         banner calls fbq('consent','grant') on accept (mirrors Consent Mode v2 above).
+         Fires PageView on load and Lead on successful form submit (see src/App.tsx).
          Verify firing with the Meta Pixel Helper Chrome extension. -->
     <!-- Meta Pixel Code -->
     <script>
@@ -68,7 +67,6 @@
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('consent', 'revoke');
       fbq('init', '2475051009627720');
       fbq('track', 'PageView');
     </script>
